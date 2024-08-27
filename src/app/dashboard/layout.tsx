@@ -25,6 +25,9 @@ const links = [
   { name: "sheet", href: "sheet" },
   { name: "skeleton", href: "skeleton" },
   { name: "slider", href: "slider" },
+  { name: "sonner", href: "sonner" },
+  { name: "toaster", href: "toaster" },
+  { name: "tab", href: "tab" },
 ].sort( (a, b) => a.name.localeCompare(b.name));
 
 export default function DashboardLayout({
@@ -71,8 +74,9 @@ export default function DashboardLayout({
                   ></path>
                 </svg>
               </button>
-              <a
-                href="#"
+              <Link
+
+                href="/"
                 className="text-xl font-bold flex items-center lg:ml-2.5"
               >
                 {/* Logo */}
@@ -109,7 +113,7 @@ export default function DashboardLayout({
                   {" "}
                   Shadcn/ui
                 </span>
-              </a>
+              </Link>
             </div>
             <div className="flex items-center">
               {/* User Avatar */}
