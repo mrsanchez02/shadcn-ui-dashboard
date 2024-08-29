@@ -87,95 +87,89 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
-        <Input
-          placeholder="Filter anything... (client name, email, status)"
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            setCurrentStatus('all');
-            table.getColumn("status")?.setFilterValue(undefined)
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          }
-          className="max-w-sm"
-        />
-
-        <Select
-          value={currentStatus}
-          onValueChange={(value) => {
-            setCurrentStatus(value)
-            if (value === 'all') {
-              // setCurrentStatus(value)
+        <div className="flex gap-4">
+          <Input
+            placeholder="Filter anything... (client name, email, status)"
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              setCurrentStatus('all');
               table.getColumn("status")?.setFilterValue(undefined)
-              return
+              table.getColumn("email")?.setFilterValue(event.target.value)
             }
-            // setCurrentStatus(value)
-            table.getColumn("status")?.setFilterValue(value)
-          }}
-        // onValueChange={() => setCurrentStatus}
+            }
+            className="max-w-sm w-[380px]"
+          />
 
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Status - All" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Status</SelectLabel>
-              <SelectItem value={'all'}>All</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="processing">Processing</SelectItem>
-              <SelectItem value="success">Success</SelectItem>
-              <SelectItem value="failed">Failed</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          <Select
+            value={currentStatus}
+            onValueChange={(value) => {
+              setCurrentStatus(value)
+              if (value === 'all') {
+                // setCurrentStatus(value)
+                table.getColumn("status")?.setFilterValue(undefined)
+                return
+              }
+              // setCurrentStatus(value)
+              table.getColumn("status")?.setFilterValue(value)
+            }}
+          // onValueChange={() => setCurrentStatus}
 
-        {hasRowSelected && <Button
-          className="mx-2"
-          variant={'destructive'}
-          onClick={() => {
-            // console.log(rowSelection)
-            // table.getFilteredSelectedRowModel().rows.forEach((row) => {
-            //   console.log(row.original)
-            // })
-            setDialogOpen(true);
-            const ids = table.getFilteredSelectedRowModel().rows.map((row) => {
-              return (row.original as Payment).clientName;
-            })
-            // console.log(ids);
-            // toast.info("Check the console for a list of deleted clients")
-          }}
-          disabled={!table.getFilteredSelectedRowModel().rows.length}
-        >
-          Delete
-        </Button>}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Status - All" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Status</SelectLabel>
+                <SelectItem value={'all'}>All</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="processing">Processing</SelectItem>
+                <SelectItem value="success">Success</SelectItem>
+                <SelectItem value="failed">Failed</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          {hasRowSelected && <Button
+            className="mx-2"
+            variant={'destructive'}
+            onClick={() => {
+              setDialogOpen(true);
+            }}
+            disabled={!table.getFilteredSelectedRowModel().rows.length}
+          >
+            Delete
+          </Button>}
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .filter((column) => column.id !== 'actions')
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .filter((column) => column.id !== 'actions')
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -280,7 +274,7 @@ export function DataTable<TData, TValue>({
                 return (row.original as Payment).clientName;
               })
               console.log(`Deleted clients: ${ids.join(', ')}`);
-              toast.info("Check the console for a list of deleted clients", {duration: 2000})
+              toast.info("Check the console for a list of deleted clients", { duration: 2000 })
               setDialogOpen(false);
             }}>Continue</AlertDialogAction>
           </AlertDialogFooter>
