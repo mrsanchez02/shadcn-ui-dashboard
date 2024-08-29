@@ -86,7 +86,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
+      {/* <div className="flex items-center py-4 justify-between"> */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div className="flex gap-4">
           <Input
             placeholder="Filter anything... (client name, email, status)"
@@ -130,7 +131,7 @@ export function DataTable<TData, TValue>({
             </SelectContent>
           </Select>
         </div>
-        <div>
+        <div className="flex justify-end">
           {hasRowSelected && <Button
             className="mx-2"
             variant={'destructive'}
@@ -172,7 +173,7 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
       <div className="rounded-md border">
-        <Table>
+        <Table className="mb-4">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -243,7 +244,7 @@ export function DataTable<TData, TValue>({
             table.setPageSize(Number(value))
           }}
         >
-          <SelectTrigger className="w-[180px] m-2">
+          <SelectTrigger className="w-[140px] md:w-[180px] m-2">
             <SelectValue placeholder='10 rows' />
           </SelectTrigger>
           <SelectContent>
@@ -257,6 +258,7 @@ export function DataTable<TData, TValue>({
             </SelectGroup>
           </SelectContent>
         </Select>
+
       </div>
       <AlertDialog open={isDeleteDialogOpen}>
         <AlertDialogContent>
