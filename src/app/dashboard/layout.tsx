@@ -3,7 +3,7 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 
 const links = [
   { name: "accordion", href: "accordion" },
@@ -40,13 +40,19 @@ export default function DashboardLayout({
   const [isHidden, setIsHidden] = useState(false);
   const sidebarRef = createRef<HTMLDivElement>();
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-      setIsHidden(true);
-    }
-  }
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+  //     setIsHidden(true);
+  //   }
+  // }
 
-  document.addEventListener('click', handleClickOutside);
+  // document.addEventListener("click", handleClickOutside);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
+  // }, [sidebarRef]);
 
   return (
     <>
