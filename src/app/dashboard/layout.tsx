@@ -37,16 +37,16 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isHidden, setIsHidden] = useState(false);
-  const sidebarRef = createRef<HTMLDivElement>();
+  const [isHidden, setIsHidden] = useState(true);
+  // const sidebarRef = createRef<HTMLDivElement>();
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-      setIsHidden(true);
-    }
-  }
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+  //     setIsHidden(true);
+  //   }
+  // }
 
-  document.addEventListener("click", handleClickOutside);
+  // document.addEventListener("click", handleClickOutside);
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside);
   //   return () => {
@@ -151,11 +151,11 @@ export default function DashboardLayout({
           </div>
         </div>
       </nav>
-      <div className="flex overflow-hidden bg-white pt-16">
+      <div className="flex bg-white pt-16 overflow-auto">
         <aside
-          ref={sidebarRef}
+          // ref={sidebarRef}
           id="sidebar"
-          className={`fixed ${isHidden && 'hidden'} z-20 h-full top-0 left-0 pt-16 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75`}
+          className={`fixed ${'hidden'} z-20 h-full top-0 left-0 pt-16 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75`}
           aria-label="Sidebar"
         >
           <div className="relative flex-1 flex flex-col min-h-0 borderR border-gray-200 bg-white pt-0">
