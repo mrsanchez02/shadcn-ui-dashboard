@@ -40,13 +40,13 @@ export default function DashboardLayout({
   const [isHidden, setIsHidden] = useState(false);
   const sidebarRef = createRef<HTMLDivElement>();
 
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-  //     setIsHidden(true);
-  //   }
-  // }
+  const handleClickOutside = (event: MouseEvent) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+      setIsHidden(true);
+    }
+  }
 
-  // document.addEventListener("click", handleClickOutside);
+  document.addEventListener("click", handleClickOutside);
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside);
   //   return () => {
