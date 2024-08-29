@@ -1,8 +1,9 @@
 // https://tailwindcomponents.com/component/tailwind-css-admin-dashboard-layout
 // https://gist.github.com/Klerith/3949f1c8b884d7101e378dfb668f0f3a
-
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { createRef, useState } from "react";
 
 const links = [
   { name: "accordion", href: "accordion" },
@@ -36,6 +37,17 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isHidden, setIsHidden] = useState(false);
+  const sidebarRef = createRef<HTMLDivElement>();
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+      setIsHidden(true);
+    }
+  }
+
+  document.addEventListener('click', handleClickOutside);
+
   return (
     <>
       <nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
@@ -43,6 +55,10 @@ export default function DashboardLayout({
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
               <button
+                onClick={() => {
+                  setIsHidden(!isHidden)
+                  // document.getElementById("toggleSidebarMobileHamburger")?.classList.toggle("hidden")
+                }}
                 id="toggleSidebarMobile"
                 aria-expanded="true"
                 aria-controls="sidebar"
@@ -131,8 +147,9 @@ export default function DashboardLayout({
       </nav>
       <div className="flex overflow-hidden bg-white pt-16">
         <aside
+          ref={sidebarRef}
           id="sidebar"
-          className="fixed hidden z-20 h-full top-0 left-0 pt-16 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
+          className={`fixed ${isHidden && 'hidden'} z-20 h-full top-0 left-0 pt-16 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75`}
           aria-label="Sidebar"
         >
           <div className="relative flex-1 flex flex-col min-h-0 borderR border-gray-200 bg-white pt-0">
@@ -155,7 +172,7 @@ export default function DashboardLayout({
           </div>
         </aside>
         <div
-          className="bg-gray-900 opacity-50 hidden fixed inset-0 z-10"
+          className={`bg-gray-900 opacity-50 ${isHidden && 'hidden'} fixed inset-0 z-10`}
           id="sidebarBackdrop"
         ></div>
         <div
